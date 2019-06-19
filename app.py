@@ -56,6 +56,19 @@ def searchdepthrangeLocation():
 	result = db_operation(sql,0)
 	return render_template('searchdepthrangeLocation.html', results=result)
 
+@app.route('/searchdepthrangeLocationRandom',methods=['GET','POST'])
+def searchdepthrangeLocationRandom():
+	frmRange = request.form['depth1']
+	toRange = request.form['depth2']
+	count = (int)(request.form['count'])
+	step = 0.2
+	for i in range(0, count):
+		start_time = time.time()
+		sql ="select * from ASSIGNMENT3.quake6 where quake6.depthError between {} and {}".format(frmRange,toRange)
+		end_time = time.time()
+		duration = end_time - start_time
+		result = db_operation(sql,0)
+		return render_template('searchdepthrangeLocation.html', results=result)
 
 @app.route('/searchdepthrangeLocationCache',methods=['GET','POST'])
 def searchdepthrangeLocationCache():
